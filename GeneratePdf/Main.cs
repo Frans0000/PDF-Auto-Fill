@@ -14,32 +14,29 @@ namespace GeneratePdf
         string test1;
         string test2;
 
-
-
         public Main()
         {
             InitializeComponent();
         }
 
-
         public void AddTextToPdf(string inputPath, string outputPath)
         {
-            // Uzyskaj strumień do zasobu osadzonego
+            // Get the stream for the embedded resource
             using (Stream pdfStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(inputPath))
             {
                 if (pdfStream == null)
                 {
-                    throw new FileNotFoundException($"Zasób {inputPath} nie został znaleziony.");
+                    throw new FileNotFoundException($"Resource {inputPath} was not found.");
                 }
 
-                // Otwórz istniejący dokument PDF
+                // Open the existing PDF document
                 PdfDocument pdfDoc = new PdfDocument(new PdfReader(pdfStream), new PdfWriter(outputPath));
                 iText.Layout.Document document = new iText.Layout.Document(pdfDoc);
 
-                // Uzyskaj pierwszą stronę dokumentu PDF
+                // Get the first page of the PDF document
                 var page = pdfDoc.GetFirstPage();
 
-                // Stwórz obiekt PdfCanvas dla strony
+                // Create a PdfCanvas object for the page
                 var canvas = new iText.Kernel.Pdf.Canvas.PdfCanvas(page);
 
                 PdfFont font = PdfFontFactory.CreateFont("C:/Windows/Fonts/arial.ttf", PdfEncodings.IDENTITY_H);
@@ -50,15 +47,14 @@ namespace GeneratePdf
                 .SetFont(font)
                 .SetBold()
                 .SetCharacterSpacing(7.5f)
-                .SetFixedPosition(1, 415, 840-152, 140); // Page number, x position, y position, width
+                .SetFixedPosition(1, 415, 840 - 152, 140); // Page number, x position, y position, width
                 document.Add(text);
 
                 text = new Paragraph(test2)
                     .SetFontSize(26)
                     .SetFont(font)
-                    .SetFixedPosition(1, 110, 840 - 342, 140); // Page number, x position, y position, width
+                    .SetFixedPosition(1, 110, 840 - 342, 140);
                 document.Add(text);
-
 
                 // Close the document
                 document.Close();
@@ -75,10 +71,8 @@ namespace GeneratePdf
 
             AddTextToPdf(pdfPath1, finalPdfOutputPath);
 
-
             PdfPreviewForm previewForm = new PdfPreviewForm(finalPdfOutputPath);
-            previewForm.ShowDialog(); // Blokowanie dopóki użytkownik nie zamknie okienka podglądu
+            previewForm.ShowDialog(); // Block until the user closes the preview window
         }
     }
-
 }

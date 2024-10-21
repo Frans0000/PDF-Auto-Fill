@@ -10,7 +10,7 @@ This project targets .NET Framework 4.8. Please note that PdfiumViewer is not co
 - Adding text to existing PDF documents at specified positions
 - Previewing the filled PDF within the application interface
 
-## Instalation
+## Installation
 ```bash
 git clone https://github.com/Frans0000/PDF-Auto-Fill.git
 ```
